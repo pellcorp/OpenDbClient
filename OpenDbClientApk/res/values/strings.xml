@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OpenDb Client</string>
+    
+    <string name="settings_label">Host Details</string>
+    <string name="settings_title">OpenDb Host Details</string>
+    <string name="settings_shortcut">s</string>
+    
+    <string name="host_url_title">Url</string>
+    <string name="host_url_summary">OpenDb Host Url</string>
+    
+    <string name="username_title">Username</string>
+    <string name="username_summary">OpenDb JsonRpc Username</string>
+    
+    <string name="password_title">Password</string>
+    <string name="password_summary">OpenDb JsonRpc Password</string>
+    
+    <string name="pref_host_url">url</string>
+    <string name="pref_username">username</string>
+    <string name="pref_password">password</string>
+</resources>
