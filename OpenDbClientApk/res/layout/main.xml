@@ -1,21 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:stretchColumns="1" >
+    android:layout_height="wrap_content" >
 
     <TableRow>
-        <TextView
-            android:id="@+id/ItemType"
-            android:layout_column="1"
-            android:padding="3dip"
-            android:text="" />
+        <EditText
+            android:id="@+id/titleSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:text="" >
 
-        <TextView
-            android:id="@+id/Title"
-            android:padding="3dip"
-            android:text="" />
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+        
     </TableRow>
 
+    <TableRow>
+
+        <TableLayout
+            android:id="@+id/results_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:stretchColumns="0,1"
+            android:paddingTop="20dp" >
+
+        </TableLayout>
+    </TableRow>
 </TableLayout>

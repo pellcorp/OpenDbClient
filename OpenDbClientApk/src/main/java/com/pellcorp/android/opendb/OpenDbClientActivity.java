@@ -10,10 +10,14 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 
 import com.pellcorp.android.opendb.OpenDbClientReceiver.Receiver;
@@ -24,6 +28,7 @@ public class OpenDbClientActivity extends Activity implements Receiver {
 	private OpenDbClientReceiver receiver;
 	private ProgressDialog progressDialog;
 	private Preferences preferences;
+	private TableLayout resultsLayout;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -35,8 +40,15 @@ public class OpenDbClientActivity extends Activity implements Receiver {
 
 		setContentView(R.layout.main);
 
-//		peakUsage = (TextView) findViewById(R.id.PeakUsage);
-//		offPeakUsage = (TextView) findViewById(R.id.OffPeakUsage);
+		resultsLayout = (TableLayout) findViewById(R.id.results_table);
+
+		TableRow tr_head = new TableRow(this);
+		tr_head.setId(10);
+		tr_head.setBackgroundColor(Color.GRAY);
+		tr_head.setLayoutParams(new LayoutParams(
+		LayoutParams.FILL_PARENT,
+		LayoutParams.WRAP_CONTENT));
+		resultsLayout.addView(tr_head);
 
 		IntentFilter filter = new IntentFilter(OpenDbClientReceiver.ACTION_ITEM_SEARCH);
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
@@ -112,16 +124,41 @@ public class OpenDbClientActivity extends Activity implements Receiver {
 		return builder.create();
 	}
 
+	private void populateSearchResults(DownloadResult<ItemSearchResults> result) {
+		resultsLayout.removeAllViews();
+		for(Item item : result.getResult().getItemList()) {
+			TableRow tr = new TableRow(this);
+			tr.setLayoutParams(new LayoutParams(
+					LayoutParams.FILL_PARENT,
+					LayoutParams.WRAP_CONTENT));
+			
+			TextView type = new TextView(this);
+			type.setText(item.getType());
+			type.setTextColor(Color.WHITE);
+			tr.addView(type);
+			
+			TextView title = new TextView(this);
+			type.setText(item.getTitle());
+			type.setTextColor(Color.WHITE);
+			tr.addView(title);
+			
+			resultsLayout.addView(tr, new TableLayout.LayoutParams(
+                    LayoutParams.FILL_PARENT,
+                    LayoutParams.WRAP_CONTENT));
+		}
+	}
+	
 	@Override
-	public void onReceive(DownloadResult<ItemSearchResults> result) {
+	public void onReceive(DownloadResult<ItemSearchResults> results) {
 		progressDialog.dismiss();
 		
-		if (result.getResult() != null) {
-		} else if (result.isInvalidCredentials()) {
+		if (results.getResult() != null) {
+			populateSearchResults(results);
+		} else if (results.isInvalidCredentials()) {
 			Dialog dialog = createSettingsMissingDialog(getString(R.string.missing_connection_details));
 			dialog.show();
 		} else {
-			AlertDialog dialog = createErrorDialog(result.getErrorMessage());
+			AlertDialog dialog = createErrorDialog(results.getErrorMessage());
 			dialog.show();
 		}
 	}
