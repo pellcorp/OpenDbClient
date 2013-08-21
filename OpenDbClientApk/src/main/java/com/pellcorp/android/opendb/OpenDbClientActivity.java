@@ -57,13 +57,6 @@ public class OpenDbClientActivity extends Activity implements Receiver {
 				
 			}
 		});
-		TableRow tr_head = new TableRow(this);
-		tr_head.setId(10);
-		tr_head.setBackgroundColor(Color.GRAY);
-		tr_head.setLayoutParams(new LayoutParams(
-		LayoutParams.FILL_PARENT,
-		LayoutParams.WRAP_CONTENT));
-		resultsLayout.addView(tr_head);
 
 		IntentFilter filter = new IntentFilter(OpenDbClientReceiver.ACTION_ITEM_SEARCH);
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
@@ -76,6 +69,11 @@ public class OpenDbClientActivity extends Activity implements Receiver {
 		super.onStart();
 
 		logger.info("Starting onStart");
+		
+		if (!preferences.isConfigured()) {
+			Dialog dialog = createSettingsMissingDialog(getString(R.string.missing_connection_details));
+			dialog.show();
+		}
 	}
 
 	private void itemSearch() {
@@ -152,8 +150,8 @@ public class OpenDbClientActivity extends Activity implements Receiver {
 			tr.addView(type);
 			
 			TextView title = new TextView(this);
-			type.setText(item.getTitle());
-			type.setTextColor(Color.WHITE);
+			title.setText(item.getTitle());
+			title.setTextColor(Color.WHITE);
 			tr.addView(title);
 			
 			resultsLayout.addView(tr, new TableLayout.LayoutParams(
