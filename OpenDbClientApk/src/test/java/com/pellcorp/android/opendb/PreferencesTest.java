@@ -1,24 +1,21 @@
-package com.pellcorp.android.transact;
+package com.pellcorp.android.opendb;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.File;
-import java.io.IOException;
-
 import junit.framework.TestCase;
-
-import com.pellcorp.android.transact.prefs.PreferenceProvider;
 
 public class PreferencesTest extends TestCase {
 	public void testPreferences() {
 		PreferenceProvider prefs = mock(PreferenceProvider.class);
-		when(prefs.getString(R.string.pref_account_password)).thenReturn("password");
-		when(prefs.getString(R.string.pref_account_username)).thenReturn("username");
-
+		when(prefs.getString(R.string.pref_password)).thenReturn("password");
+		when(prefs.getString(R.string.pref_username)).thenReturn("username");
+		when(prefs.getString(R.string.pref_host_url)).thenReturn("http://localhost/opendb");
+		
 		Preferences preferences = new Preferences(prefs);
 		
-		assertEquals("username", preferences.getAccountUsername());
-		assertEquals("password", preferences.getAccountPassword());
+		assertEquals("username", preferences.getUsername());
+		assertEquals("password", preferences.getPassword());
+		assertEquals("http://localhost/opendb", preferences.getHost());
 	}
 }

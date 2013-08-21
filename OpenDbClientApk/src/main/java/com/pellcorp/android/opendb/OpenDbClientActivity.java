@@ -21,13 +21,9 @@ import com.pellcorp.android.opendb.OpenDbClientReceiver.Receiver;
 public class OpenDbClientActivity extends Activity implements Receiver {
 	private final Logger logger = LoggerFactory.getLogger(getClass().getName());
 
-	private TransactQuotaUsageReceiver receiver;
-	private TextView peakUsage;
-	private TextView offPeakUsage;
+	private OpenDbClientReceiver receiver;
 	private ProgressDialog progressDialog;
 	private Preferences preferences;
-	
-	private boolean usageLoaded;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -39,12 +35,12 @@ public class OpenDbClientActivity extends Activity implements Receiver {
 
 		setContentView(R.layout.main);
 
-		peakUsage = (TextView) findViewById(R.id.PeakUsage);
-		offPeakUsage = (TextView) findViewById(R.id.OffPeakUsage);
+//		peakUsage = (TextView) findViewById(R.id.PeakUsage);
+//		offPeakUsage = (TextView) findViewById(R.id.OffPeakUsage);
 
-		IntentFilter filter = new IntentFilter(TransactQuotaUsageReceiver.ACTION_USAGE_DOWNLOADED);
+		IntentFilter filter = new IntentFilter(OpenDbClientReceiver.ACTION_ITEM_SEARCH);
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
-		receiver = new TransactQuotaUsageReceiver(this);
+		receiver = new OpenDbClientReceiver(this);
 		registerReceiver(receiver, filter);
 	}
 
@@ -53,23 +49,17 @@ public class OpenDbClientActivity extends Activity implements Receiver {
 		super.onStart();
 
 		logger.info("Starting onStart");
-
-		if (!usageLoaded) {
-			refreshUsage();
-		}
 	}
 
-	private void refreshUsage() {
-		peakUsage.setText("-");
-		offPeakUsage.setText("-");
-		
+	private void itemSearch(String title) {
 		if (preferences.isConfigured()) {
-			progressDialog = ProgressDialog.show(this, getString(R.string.loading_usage), getString(R.string.please_wait));
+			//progressDialog = ProgressDialog.show(this, getString(R.string.loading_usage), getString(R.string.please_wait));
 		
-			Intent intent = new Intent(this, TransactionQuotaService.class);
+			Intent intent = new Intent(this, OpenDbClientService.class);
+			intent.putExtra(ItemSearch.TITLE_PARAM, title);
 			startService(intent);
 		} else {
-			Dialog dialog = createSettingsMissingDialog(getString(R.string.invalid_account_details));
+			Dialog dialog = createSettingsMissingDialog(getString(R.string.missing_connection_details));
 			dialog.show();
 		}
 	}
@@ -87,9 +77,6 @@ public class OpenDbClientActivity extends Activity implements Receiver {
 		switch (item.getItemId()) {
 		case R.id.settings:
 			startActivity(new Intent(this, PrefsActivity.class));
-			return true;
-		case R.id.refresh:
-			refreshUsage();
 			return true;
 		}
 		return false;
@@ -118,7 +105,7 @@ public class OpenDbClientActivity extends Activity implements Receiver {
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 								startActivity(new Intent(
-										TransactQuotaActivity.this,
+										OpenDbClientActivity.this,
 										PrefsActivity.class));
 							}
 						});
@@ -126,15 +113,12 @@ public class OpenDbClientActivity extends Activity implements Receiver {
 	}
 
 	@Override
-	public void onReceive(DownloadResult<Usage> result) {
+	public void onReceive(DownloadResult<ItemSearchResults> result) {
 		progressDialog.dismiss();
 		
 		if (result.getResult() != null) {
-			peakUsage.setText(result.getResult().getPeakUsage().toString());
-			offPeakUsage.setText(result.getResult().getOffPeakUsage().toString());
-			usageLoaded = true;
 		} else if (result.isInvalidCredentials()) {
-			Dialog dialog = createSettingsMissingDialog(getString(R.string.invalid_account_details));
+			Dialog dialog = createSettingsMissingDialog(getString(R.string.missing_connection_details));
 			dialog.show();
 		} else {
 			AlertDialog dialog = createErrorDialog(result.getErrorMessage());

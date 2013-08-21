@@ -4,9 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.pellcorp.android.transact.prefs.PreferenceProvider;
-import com.pellcorp.android.transact.prefs.PreferenceProviderImpl;
-
 public class Preferences {
 	private final PreferenceProvider preferenceProvider;
 	
@@ -20,16 +17,18 @@ public class Preferences {
 	}
 	
 	public boolean isConfigured() {
-		return getAccountUsername() != null && getAccountPassword() != null;
-	}
-		
-	public String getAccountUsername() {
-		String accountName = preferenceProvider.getString(R.string.pref_account_username);
-		return accountName;
+		return getUsername() != null && getPassword() != null && getHost() != null;
 	}
 	
-	public String getAccountPassword() {
-		String accountPassword = preferenceProvider.getString(R.string.pref_account_password);
-		return accountPassword;
+	public String getHost() {
+		return preferenceProvider.getString(R.string.pref_host_url);
+	}
+	
+	public String getUsername() {
+		return preferenceProvider.getString(R.string.pref_username);
+	}
+	
+	public String getPassword() {
+		return preferenceProvider.getString(R.string.pref_password);
 	}
 }

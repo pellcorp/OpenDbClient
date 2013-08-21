@@ -17,7 +17,7 @@
         
         <EditTextPreference
             android:defaultValue=""
-            android:key="@string/pref_account_password"
+            android:key="@string/pref_password"
             android:summary="@string/password_summary"
             android:title="@string/password_title" />
     </PreferenceCategory>

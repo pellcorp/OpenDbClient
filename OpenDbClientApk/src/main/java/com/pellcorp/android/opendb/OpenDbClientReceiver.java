@@ -4,26 +4,27 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-public class TransactQuotaUsageReceiver extends BroadcastReceiver {
-	public static final String ACTION_USAGE_DOWNLOADED =
-		      "com.pellcorp.android.opendb.action.USAGE_DOWNLOADED";
+public class OpenDbClientReceiver extends BroadcastReceiver {
+	public static final String ACTION_ITEM_SEARCH =
+		      "com.pellcorp.android.opendb.action.ACTION_ITEM_SEARCH";
 	
 	private final Receiver receiver;
 	
-	public TransactQuotaUsageReceiver(final Receiver receiver) {
+	public OpenDbClientReceiver(final Receiver receiver) {
 		super();
 		
 		this.receiver = receiver;
 	}
 	
 	public interface Receiver {
-		void onReceive(DownloadResult<Usage> results);
+		void onReceive(DownloadResult<ItemSearchResults> results);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		@SuppressWarnings("unchecked")
-		DownloadResult<Usage> results = (DownloadResult<Usage>) intent.getSerializableExtra(TransactionQuotaService.USAGE_DATA);
+		DownloadResult<ItemSearchResults> results = 
+				(DownloadResult<ItemSearchResults>) intent.getSerializableExtra(OpenDbClientService.ITEM_SEARCH);
 		receiver.onReceive(results);
 	}
 }

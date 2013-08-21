@@ -1,22 +1,15 @@
 package com.pellcorp.android.opendb;
 
-import java.io.IOException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import android.app.IntentService;
 import android.content.Intent;
 
 public class OpenDbClientService extends IntentService {
-	public static final String USAGE_DATA = "com.pellcorp.android.opendb.USAGE_DATA";
-	
-	private final Logger logger = LoggerFactory.getLogger(getClass().getName());
+	public static final String ITEM_SEARCH = "com.pellcorp.android.opendb.ITEM_SEARCH";
 	
 	private Preferences preferences;
 
-	public TransactionQuotaService() {
-		super("TransactionQuotaService");
+	public OpenDbClientService() {
+		super("OpenDbClientService");
 	}
 	
 	@Override
@@ -28,36 +21,30 @@ public class OpenDbClientService extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		TransactQuota transactQuota = new TransactQuota(
-				preferences.getAccountUsername(),
-				preferences.getAccountPassword());
-
-		DownloadResult<Usage> usage = null;
+		DownloadResult<ItemSearchResults> results = null;
+		
 		try {
 			if (preferences.isConfigured()) {
-				usage = new DownloadResult<Usage>(transactQuota.getUsage());
+				OpenDbClient client = new OpenDbClientImpl(
+						preferences.getHost(),
+						preferences.getUsername(), 
+						preferences.getPassword());
+		
+				String title = intent.getStringExtra(ItemSearch.TITLE_PARAM);
+				ItemSearch itemSearch = new ItemSearch(client);
+				results = new DownloadResult<ItemSearchResults>(itemSearch.titleSearch("%" + title + "%"));
 			} else {
-				usage = new DownloadResult<Usage>(true);
+				results = new DownloadResult<ItemSearchResults>(true);
 			}
-		} catch(InvalidCredentialsException e) {
-			usage = new DownloadResult<Usage>(true);
-		} catch (UsageNotAvailableException e) {
-			logger.error("UsageNotAvailableException", e);
-			usage = new DownloadResult<Usage>("Usage Not Available");
-		} catch (IOException e) {
-			logger.error("Connectivity Exception", e);
-			usage = new DownloadResult<Usage>("Connection Failed");
-		} catch (Exception e) {
-			logger.error("Unknown Exception", e);
-			usage = new DownloadResult<Usage>("Unknown Error");
-		} finally {
-			transactQuota.disconnect();
-		}
 			
+		} catch (Exception e) {
+			results = new DownloadResult<ItemSearchResults>(e.getMessage());
+		}
+		
 		Intent broadcastIntent = new Intent();
-		broadcastIntent.setAction(TransactQuotaUsageReceiver.ACTION_USAGE_DOWNLOADED);
+		broadcastIntent.setAction(OpenDbClientReceiver.ACTION_ITEM_SEARCH);
 		broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
-		broadcastIntent.putExtra(USAGE_DATA, usage);
+		broadcastIntent.putExtra(ITEM_SEARCH, results);
 		sendBroadcast(broadcastIntent);
 	}
 }

@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class ItemSearch {
 	private static final String METHOD = "itemsearch.titleSearch";
-	private static final String TITLE_PARAM = "title";
+	public static final String TITLE_PARAM = "title";
 	
 	private static final String RESULT_TITLE = "title";
 	private static final String RESULT_ITEM_ID = "item_id";
