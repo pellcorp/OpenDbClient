@@ -38,6 +38,7 @@ public class OpenDbClientService extends IntentService {
 			}
 			
 		} catch (Exception e) {
+			
 			results = new DownloadResult<ItemSearchResults>(e.getMessage());
 		}
 		

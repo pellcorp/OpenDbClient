@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Request;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Response;
@@ -17,6 +19,8 @@ import com.thetransactioncompany.jsonrpc2.client.JSONRPC2Session;
 import com.thetransactioncompany.jsonrpc2.client.JSONRPC2SessionException;
 
 public class OpenDbClientImpl implements OpenDbClient {
+	private final Logger logger = LoggerFactory.getLogger(getClass());
+	
 	private final AtomicLong requestIdGen = new AtomicLong();
 	private final JSONRPC2Session session;
 
@@ -31,6 +35,7 @@ public class OpenDbClientImpl implements OpenDbClient {
 							Base64.encodeBase64((username+":"+password).getBytes("UTF-8")), "UTF-8");
 					connection.setRequestProperty("Authorization", "Basic "+encoded);
 				} catch (UnsupportedEncodingException e) {
+					logger.error("Failed to authenticate", e);
 				} 
 			}
 		});
@@ -47,6 +52,7 @@ public class OpenDbClientImpl implements OpenDbClient {
 			JSONRPC2Response response = session.send(request);
 			return (List<Map<String, Object>>) response.getResult();
 		} catch (JSONRPC2SessionException e) {
+			logger.error("Failed to send", e);
 			throw new OpenDbClientException(e);
 		}
 	}

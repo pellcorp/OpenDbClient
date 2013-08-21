@@ -16,7 +16,7 @@
         </activity>
         
         <activity android:label="@string/settings_title" android:name=".PrefsActivity"/>
-        <service android:name=".OpenDbService"/>
+        <service android:name=".OpenDbClientService"/>
     </application>
 
 </manifest>

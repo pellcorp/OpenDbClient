@@ -15,6 +15,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
@@ -29,6 +33,8 @@ public class OpenDbClientActivity extends Activity implements Receiver {
 	private ProgressDialog progressDialog;
 	private Preferences preferences;
 	private TableLayout resultsLayout;
+	private Button searchButton;
+	private EditText searchField;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -41,7 +47,16 @@ public class OpenDbClientActivity extends Activity implements Receiver {
 		setContentView(R.layout.main);
 
 		resultsLayout = (TableLayout) findViewById(R.id.results_table);
-
+		searchField = (EditText) findViewById(R.id.titleSearch);
+		searchButton = (Button) findViewById(R.id.searchButton);
+		searchButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				itemSearch();
+				
+			}
+		});
 		TableRow tr_head = new TableRow(this);
 		tr_head.setId(10);
 		tr_head.setBackgroundColor(Color.GRAY);
@@ -63,12 +78,11 @@ public class OpenDbClientActivity extends Activity implements Receiver {
 		logger.info("Starting onStart");
 	}
 
-	private void itemSearch(String title) {
+	private void itemSearch() {
 		if (preferences.isConfigured()) {
-			//progressDialog = ProgressDialog.show(this, getString(R.string.loading_usage), getString(R.string.please_wait));
-		
+			progressDialog = ProgressDialog.show(this, getString(R.string.loading), getString(R.string.please_wait));
 			Intent intent = new Intent(this, OpenDbClientService.class);
-			intent.putExtra(ItemSearch.TITLE_PARAM, title);
+			intent.putExtra(ItemSearch.TITLE_PARAM, searchField.getText().toString());
 			startService(intent);
 		} else {
 			Dialog dialog = createSettingsMissingDialog(getString(R.string.missing_connection_details));
