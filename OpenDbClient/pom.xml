@@ -2,11 +2,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>OpenDbClient</artifactId>
 	<name>Transact Quota</name>
+	<version>0.0.2</version>
 	
 	<parent>
 		<groupId>com.pellcorp.android</groupId>
 		<artifactId>OpenDbClientParent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</parent>
 	
 	<dependencies>

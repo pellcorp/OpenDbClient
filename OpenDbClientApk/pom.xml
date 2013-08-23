@@ -3,11 +3,12 @@
 	<artifactId>OpenDbClientApk</artifactId>
 	<packaging>apk</packaging>
 	<name>OpenDb Client Android Package</name>
+	<version>0.0.2</version>
 	
 	<parent>
 		<groupId>com.pellcorp.android</groupId>
 		<artifactId>OpenDbClientParent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</parent>
 
 	<dependencies>

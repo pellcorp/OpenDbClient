@@ -78,6 +78,8 @@ public class OpenDbClientActivity extends Activity implements Receiver {
 
 	private void itemSearch() {
 		if (preferences.isConfigured()) {
+			resultsLayout.removeAllViews();
+			
 			progressDialog = ProgressDialog.show(this, getString(R.string.loading), getString(R.string.please_wait));
 			Intent intent = new Intent(this, OpenDbClientService.class);
 			intent.putExtra(ItemSearch.TITLE_PARAM, searchField.getText().toString());
@@ -137,7 +139,6 @@ public class OpenDbClientActivity extends Activity implements Receiver {
 	}
 
 	private void populateSearchResults(DownloadResult<ItemSearchResults> result) {
-		resultsLayout.removeAllViews();
 		for(Item item : result.getResult().getItemList()) {
 			TableRow tr = new TableRow(this);
 			tr.setLayoutParams(new LayoutParams(
