@@ -48,8 +48,8 @@
                                     </includes>
                                     <keystore>~/.ssh/android.jks</keystore>
                                     <alias>Pellcorp</alias>
-									<storepass>'${password}'</storepass>
-                                    	<keypass>'${password}'</keypass>
+									<storepass>'${jarsigner.password}'</storepass>
+                                    	<keypass>'${jarsigner.password}'</keypass>
                                     <arguments>
 										<argument>-sigalg</argument><argument>MD5withRSA</argument>
 										<argument>-digestalg</argument><argument>SHA1</argument>

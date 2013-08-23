@@ -13,7 +13,7 @@ public class OpenDbClientImplTest extends Assert {
 	
 	@Before
 	public void setup() throws Exception {
-		client = new OpenDbClientImpl("http://localhost/opendb", "admin", "admin");
+		client = new OpenDbClientImpl("http://localhost/opendb", "test", "test");
 	}
 	
 	@Test
@@ -34,6 +34,6 @@ public class OpenDbClientImplTest extends Assert {
 	public void testItemSearch() throws Exception {
 		ItemSearch itemSearch = new ItemSearch(client);
 		ItemSearchResults results = itemSearch.titleSearch("%");
-		assertEquals(2, results.getItemList().size());
+		assertTrue(results.getItemList().size() > 2);
 	}
 }
