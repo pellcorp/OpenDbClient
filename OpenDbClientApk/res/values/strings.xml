@@ -22,4 +22,6 @@
     <string name="missing_connection_details">Missing Connection Details</string>
     <string name="please_wait">Please Wait...</string>
     <string name="loading">Loading...</string>
+    
+    <color name="background">#AA95B1CF</color>
 </resources>

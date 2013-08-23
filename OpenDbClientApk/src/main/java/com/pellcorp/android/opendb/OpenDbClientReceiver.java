@@ -25,6 +25,7 @@ public class OpenDbClientReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		DownloadResult<ItemSearchResults> results = 
 				(DownloadResult<ItemSearchResults>) intent.getSerializableExtra(OpenDbClientService.ITEM_SEARCH);
+		
 		receiver.onReceive(results);
 	}
 }

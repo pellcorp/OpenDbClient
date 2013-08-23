@@ -57,11 +57,6 @@ public class OpenDbClientActivity extends Activity implements Receiver {
 				
 			}
 		});
-
-		IntentFilter filter = new IntentFilter(OpenDbClientReceiver.ACTION_ITEM_SEARCH);
-		filter.addCategory(Intent.CATEGORY_DEFAULT);
-		receiver = new OpenDbClientReceiver(this);
-		registerReceiver(receiver, filter);
 	}
 
 	@Override
@@ -69,6 +64,11 @@ public class OpenDbClientActivity extends Activity implements Receiver {
 		super.onStart();
 
 		logger.info("Starting onStart");
+
+		IntentFilter filter = new IntentFilter(OpenDbClientReceiver.ACTION_ITEM_SEARCH);
+		filter.addCategory(Intent.CATEGORY_DEFAULT);
+		receiver = new OpenDbClientReceiver(this);
+		registerReceiver(receiver, filter);
 		
 		if (!preferences.isConfigured()) {
 			Dialog dialog = createSettingsMissingDialog(getString(R.string.missing_connection_details));
