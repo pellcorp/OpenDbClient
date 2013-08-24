@@ -7,6 +7,7 @@ import java.util.Map;
 public class ItemSearch {
 	private static final String METHOD = "itemsearch.titleSearch";
 	public static final String TITLE_PARAM = "title";
+	public static final String TITLE_MATCH_PARAM = "title_match";
 	
 	private static final String RESULT_TYPE = "s_item_type";
 	private static final String RESULT_TITLE = "title";
@@ -22,6 +23,8 @@ public class ItemSearch {
 	public ItemSearchResults titleSearch(String title) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put(TITLE_PARAM, title);
+		params.put(TITLE_MATCH_PARAM, "partial");
+		
 		List<Map<String, Object>> results = client.send(METHOD, params);
 		
 		ItemSearchResults resultObj = new ItemSearchResults();

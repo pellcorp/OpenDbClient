@@ -32,13 +32,12 @@ public class OpenDbClientService extends IntentService {
 		
 				String title = intent.getStringExtra(ItemSearch.TITLE_PARAM);
 				ItemSearch itemSearch = new ItemSearch(client);
-				results = new DownloadResult<ItemSearchResults>(itemSearch.titleSearch("%" + title + "%"));
+				results = new DownloadResult<ItemSearchResults>(itemSearch.titleSearch(title));
 			} else {
 				results = new DownloadResult<ItemSearchResults>(true);
 			}
 			
 		} catch (Exception e) {
-			
 			results = new DownloadResult<ItemSearchResults>(e.getMessage());
 		}
 		

@@ -52,8 +52,8 @@ public class OpenDbClientImpl implements OpenDbClient {
 
 		JSONRPC2SessionOptions options = new JSONRPC2SessionOptions();
 		options.setAllowedResponseContentTypes(new String[] {"application/json-rpc"});
-		options.setConnectTimeout(5000);
-		options.setReadTimeout(5000);
+		options.setConnectTimeout(10000);
+		options.setReadTimeout(30000);
 		
 		session.setOptions(options);
 		try {

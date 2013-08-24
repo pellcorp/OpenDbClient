@@ -3,7 +3,7 @@
 	<artifactId>OpenDbClientApk</artifactId>
 	<packaging>apk</packaging>
 	<name>OpenDb Client Android Package</name>
-	<version>0.0.2</version>
+	<version>0.0.3-SNAPSHOT</version>
 	
 	<parent>
 		<groupId>com.pellcorp.android</groupId>
@@ -38,14 +38,6 @@
 					<artifactId>slf4j-api</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-
-		<dependency>
-			<groupId>com.pellcorp.android</groupId>
-			<artifactId>OpenDbClient</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
 		</dependency>
 
 		<dependency>
