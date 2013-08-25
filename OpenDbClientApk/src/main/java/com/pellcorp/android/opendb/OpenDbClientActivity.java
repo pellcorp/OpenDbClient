@@ -10,7 +10,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -149,12 +148,10 @@ public class OpenDbClientActivity extends Activity implements Receiver {
 			
 			TextView type = new TextView(this);
 			type.setText(item.getType());
-			type.setTextColor(Color.WHITE);
 			tr.addView(type);
 			
 			TextView title = new TextView(this);
 			title.setText(item.getTitle());
-			title.setTextColor(Color.WHITE);
 			tr.addView(title);
 			
 			resultsLayout.addView(tr, new TableLayout.LayoutParams(

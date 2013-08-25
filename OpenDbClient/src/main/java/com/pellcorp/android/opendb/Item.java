@@ -3,6 +3,8 @@ package com.pellcorp.android.opendb;
 import java.io.Serializable;
 
 public class Item implements Serializable {
+	private static final long serialVersionUID = 7511520671674740062L;
+	
 	private final String type;
 	private final String title;
 	private final int itemId;

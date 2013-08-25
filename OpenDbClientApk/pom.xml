@@ -4,7 +4,7 @@
 	<packaging>apk</packaging>
 	<name>OpenDb Client Android Package</name>
 	<version>0.0.3-SNAPSHOT</version>
-	
+
 	<parent>
 		<groupId>com.pellcorp.android</groupId>
 		<artifactId>OpenDbClientParent</artifactId>
@@ -12,12 +12,12 @@
 	</parent>
 
 	<dependencies>
-	    <dependency>
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-android</artifactId>
 			<version>1.6.1-RC1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.pellcorp.android</groupId>
 			<artifactId>OpenDbClient</artifactId>
@@ -32,9 +32,9 @@
 					<groupId>org.apache.httpcomponents</groupId>
 					<artifactId>httpcore</artifactId>
 				</exclusion>
-				
+
 				<exclusion>
-				    <groupId>org.slf4j</groupId>
+					<groupId>org.slf4j</groupId>
 					<artifactId>slf4j-api</artifactId>
 				</exclusion>
 			</exclusions>
@@ -48,9 +48,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.google.android</groupId>
+			<groupId>android</groupId>
 			<artifactId>android</artifactId>
-			<version>2.3.3</version>
+			<version>3.0_r2</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -85,7 +85,7 @@
 
 				<configuration>
 					<sdk>
-						<platform>10</platform>
+						<platform>11</platform>
 					</sdk>
 
 					<deleteConflictingFiles>true</deleteConflictingFiles>
@@ -122,7 +122,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.12.3</version>
-				
+
 				<dependencies>
 					<dependency>
 						<groupId>com.google.android</groupId>
@@ -131,79 +131,15 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			
-			<plugin>
-	            <artifactId>maven-compiler-plugin</artifactId>
-	            <version>2.3.2</version>
-	            <configuration>
-	                <source>1.6</source>
-	                <target>1.6</target>
-                </configuration>
-            </plugin>
 
-<!--
 			<plugin>
-				<groupId>com.github.github</groupId>
-				<artifactId>downloads-maven-plugin</artifactId>
-				<version>0.5</version>
-						
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
 				<configuration>
-					<server>github</server>
-					<repositoryOwner>pellcorp</repositoryOwner>
-					<repositoryName>opendb-android</repositoryName>
-					<description>${project.version} release of ${project.name}</description>
-					<override>true</override>
-					<includeAttached>false</includeAttached>
+					<source>1.6</source>
+					<target>1.6</target>
 				</configuration>
-
-				<executions>
-					<execution>
-						<goals>
-							<goal>upload</goal>
-						</goals>
-						<phase>install</phase>
-					</execution>
-				</executions>
 			</plugin>
--->
-
 		</plugins>
-		
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											com.jayway.maven.plugins.android.generation2
-										</groupId>
-										<artifactId>
-											android-maven-plugin
-										</artifactId>
-										<versionRange>
-											[3.1.1,)
-										</versionRange>
-										<goals>
-											<goal>manifest-update</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 </project>
