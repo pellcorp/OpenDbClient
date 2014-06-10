@@ -6,82 +6,16 @@
 	<version>0.0.1</version>
 	<packaging>pom</packaging>
 
+	<parent>
+		<groupId>com.pellcorp.android</groupId>
+		<artifactId>parent</artifactId>
+		<version>0.0.1</version>
+	</parent>
+	
 	<modules>
 		<module>OpenDbClient</module>
 		<module>OpenDbClientApk</module>
 	</modules>
-
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-	
-	<profiles>
-        <profile>
-            <id>sign</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-jarsigner-plugin</artifactId>
-                        <version>1.2</version>
-                        <executions>
-                            <execution>
-                                <id>signing</id>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                                <phase>package</phase>
-                                <inherited>true</inherited>
-                                <configuration>
-                                    <archiveDirectory></archiveDirectory>
-                                    <includes>
-                                        <include>target/*.apk</include>
-                                    </includes>
-                                    <keystore>~/.ssh/android.jks</keystore>
-                                    <alias>Pellcorp</alias>
-									<storepass>'${jarsigner.password}'</storepass>
-                                    	<keypass>'${jarsigner.password}'</keypass>
-                                    <arguments>
-										<argument>-sigalg</argument><argument>MD5withRSA</argument>
-										<argument>-digestalg</argument><argument>SHA1</argument>
-                                    </arguments>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-					 <plugin>
-                        <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-                        <artifactId>android-maven-plugin</artifactId>
-						<version>3.6.1</version>
-
-                        <inherited>true</inherited>
-
-                        <configuration>
-                            <sign>
-                                <debug>false</debug>
-                            </sign>
-
-							<zipalign>
-								<skip>false</skip>
-							</zipalign>
-                        </configuration>
-
-						 
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
 	<scm>
 		<developerConnection>scm:git:http://github.com/pellcorp/OpenDbClient</developerConnection>
